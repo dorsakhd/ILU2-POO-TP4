@@ -1,5 +1,4 @@
 package villagegaulois;
-
 import personnages.Gaulois;
 
 public class DepenseMarchand {
