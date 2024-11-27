@@ -1,13 +1,16 @@
 package produit;
 
 public class Poisson extends Produit {
-	String date;
-	protected Poisson(String date) {
+	
+	private String date;
+
+	public Poisson(String date) {
 		super("poisson", Unite.PAR_PIECE);
 		this.date = date;
 	}
-@Override
-public String decrireProduit() {
-	return getNom() + " peches " + date + getUnite();
-}
+	@Override
+	public String decrireProduit() {
+	    return getNom() + " pêché " + date;
+	}
+
 }

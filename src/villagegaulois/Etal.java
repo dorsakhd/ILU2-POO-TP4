@@ -18,30 +18,33 @@ public class Etal<P extends IProduit> implements IEtal {
 
 	@Override
 	public int contientProduit(String produit, int quantiteSouhaitee) {
-		int quantiteAVendre = 0;
-		if (nbProduit != 0 && this.produits[0].getNom().equals(produit)) {
-			if (nbProduit >= quantiteSouhaitee) {
-				quantiteAVendre = quantiteSouhaitee;
-			} else {
-				quantiteAVendre = nbProduit;
-			}
-		}
-		return quantiteAVendre;
+	    int quantiteAVendre = 0;
+	    for (int i = 0; i < nbProduit; i++) {
+	        if (produits[i].getNom().equals(produit)) {
+	            if (nbProduit >= quantiteSouhaitee) {
+	                quantiteAVendre = quantiteSouhaitee;
+	            } else {
+	                quantiteAVendre = nbProduit;
+	            }
+	        }
+	    }
+	    return quantiteAVendre;
 	}
+
 
 	@Override
 	public int acheterProduit(int quantiteSouhaite) {
-		int prixPaye = 0;
-		for (int i = nbProduit - 1; i > nbProduit - quantiteSouhaite - 1 || i > 1; i--) {
-			prixPaye += produits[i].calculerPrix(prix);// question 3.d
-		}
-		if (nbProduit >= quantiteSouhaite) {
-			nbProduit -= quantiteSouhaite;
-		} else {
-			nbProduit = 0;
-		}
-		return prixPaye;
+	    int prixPaye = 0;
+	    for (int i = 0; i < quantiteSouhaite; i++) {
+	        prixPaye += produits[nbProduit - 1 - i].calculerPrix(prix);  
+	    }
+	    nbProduit -= quantiteSouhaite; 
+	    if (nbProduit < 0) {
+	        nbProduit = 0; 
+	    }
+	    return prixPaye;
 	}
+
 
 	@Override
 	public String etatEtal() {

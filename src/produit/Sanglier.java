@@ -4,15 +4,17 @@ import personnages.Gaulois;
 
 public class Sanglier extends Produit {
 	
-	int poids;
+	private int poid;
+	private Gaulois chasseur;
 	
-	Gaulois chasseur;
-	protected Sanglier(int poids, Gaulois chasseur) {
+	public Sanglier(int poids, Gaulois chasseur) {
 		super("sanglier",Unite.KILOGRAMME);
-		this.poids = poids;
+		this.poid = poids;
 		this.chasseur = chasseur;
 	}
-	public String  decrireProduit() {
-		return getNom() + " de " + poids + getUnite()+ " chassé par " + chasseur.getNom();
+	@Override
+	public String decrireProduit() {
+	    return getNom() + " de " + poid + " kg chassé par " + chasseur.getNom();
 	}
+
 }
