@@ -5,7 +5,6 @@ public abstract class Produit implements IProduit {
 	private Unite unite;
 	
 	protected Produit(String nom, Unite unite) {
-		super();
 		this.nom = nom;
 		this.unite = unite;
 	}

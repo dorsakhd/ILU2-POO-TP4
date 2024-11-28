@@ -33,22 +33,30 @@ public class Scenario {
 			
 			@Override
 			public void acheterProduit(String produit, int quantiteSouhaitee) {
-				int quantiteRestante = quantiteSouhaitee;
-				for (int i = 0; i < nbEtals && quantiteRestante != 0; i++) {
-					IEtal etal = marche[i];
-					int quantiteDisponible = etal.contientProduit(produit, quantiteRestante);
-					if (quantiteDisponible != 0) {
-						int prix = etal.acheterProduit(quantiteDisponible);
-						String chaineProduit = accorderNomProduit(produit, quantiteDisponible);
-						System.out.println("A l'étal n° " + (i + 1) + ", j'achete " + quantiteDisponible + " " + chaineProduit
-								+ " et je paye " + prix + " sous.");
-						quantiteRestante -= quantiteDisponible;
-					}
-				}
-				String chaineProduit = accorderNomProduit(produit, quantiteSouhaitee);
-				System.out.println("Je voulais " + quantiteSouhaitee + " " + chaineProduit + ", j'en ai acheté "
-						+ (quantiteSouhaitee - quantiteRestante) + ".");	
+			    int quantiteRestante = quantiteSouhaitee;
+
+			    for (int i = 0; i < nbEtals && quantiteRestante > 0; i++) {
+			        IEtal etal = marche[i];
+
+			        int quantiteDisponible = etal.contientProduit(produit, quantiteRestante);
+			        
+			        if (quantiteDisponible > 0) {
+			            
+			            int prix = etal.acheterProduit(quantiteDisponible);  
+			            String chaineProduit = accorderNomProduit(produit, quantiteDisponible);
+
+			            System.out.println("A l'étal n° " + (i + 1) + ", j'achète " + quantiteDisponible + " " + chaineProduit
+			                    + " et je paye " + prix + " sous.");
+			            quantiteRestante -= quantiteDisponible;  
+			        }
+			    }
+
+			    String chaineProduit = accorderNomProduit(produit, quantiteSouhaitee);
+			    System.out.println("Je voulais " + quantiteSouhaitee + " " + chaineProduit + ", j'en ai acheté "
+			            + (quantiteSouhaitee - quantiteRestante) + ".");
 			}
+
+
 			private static String accorderNomProduit(String produit, int quantiteSouhaitee) {
 				String chaineProduit = produit;
 				if (quantiteSouhaitee > 1) {
@@ -56,14 +64,40 @@ public class Scenario {
 				}
 				return chaineProduit;
 			}
-		};
-		// fin
+			
+			@Override
+			public String toString() {
+			    StringBuilder s = new StringBuilder();
 
+			    for (int i = 0; i < nbEtals; i++) {
+			        IEtal etal = marche[i];
+			        s.append(etal.etatEtal()); 
+			        s.append("\n");
+			    }
+
+			    s.append("\n");
+			    acheterProduit("sanglier", 3); 
+
+			    s.append("\n");
+			    for (int i = 0; i < nbEtals; i++) {
+			        IEtal etal = marche[i];
+			        s.append(etal.etatEtal()); 
+			        s.append("\n");
+			    }
+
+			    return s.toString();
+			}
+
+
+
+
+		};
+	
 		Gaulois ordralfabetix = new Gaulois("Ordralfabétix", 9);
 		Gaulois obelix = new Gaulois("Obélix", 20);
 		Gaulois asterix = new Gaulois("Astérix", 6);
 
-		Etal<Sanglier> etalSanglierObelix = new Etal<>();
+		IEtal<Sanglier> etalSanglierObelix = new Etal<>();
 		Etal<Sanglier> etalSanglierAsterix = new Etal<>();
 		Etal<Poisson> etalPoisson = new Etal<>();
 
